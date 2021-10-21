@@ -5,8 +5,11 @@ using namespace std;
 
 void initializeCandidateList()
 {
+
     makeNull();
     retrieve();
+
+    
 }
 void disposeCandidateList()
 {
