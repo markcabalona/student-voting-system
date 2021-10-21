@@ -1,0 +1,52 @@
+
+ang plano ko since tungkol sa student election yung system na gagawin,
+ang ieexpect natin na input from user is yung mga student information niya muna
+
+so gumawa ako ng class na Student na may mga properties na maghahawak ng student infos ng user.
+
+ano ba yung mga infos ng user na kailangan natin
+	una yung student id (for verification kung studyante ba siya ng tup) (string)
+	meron din siyang section, course, year lvl (string, bukod sa yrlvl, int yon or wag na natin isali, kahit yung course nalang)
+	name syempre (string)
+	kung rehistrado na ba sya (bool)
+	kung nakaboto na ba sya (bool)
+
+meron din tayong Cadidate class na mag hahawak ng infos ng mga candidates
+laman ng candidate
+	name 		(string)
+	vote count	(int)
+	position	(string)
+	meron din siyang section, course, year lvl (string, bukod sa yrlvl, int yon or wag na natin isali, kahit yung course nalang)
+
+
+##########################################################################################
+
+yung takbo ng system bali sa simula pag prompt sa user to insert fd(flash drive)
+if fd is inserted
+	check muna kung may voter id na ba sa fd
+	if meron na ask for password(lastname as default) if mag match then magpoproceed sa voting system, if hindi then error message tas quit
+	if wala pa display ng message tas magpoproceed sa registration 
+		sa registration (ieenter lang yung student id tapos surname as default password parang sa ers hahah)
+			imamatch natin yon sa list of students sa database (gumawa ako ng db ang laman e infos lang natin magkakaklase)
+			if nagmatch yung student id tsaka pw, mag gegenerate tayo gn voter id nya tas display ng message tas proceed sa voting 
+			if hindi display error msg tas try again o kaya quit nalang ng program
+	
+	
+##########################################################################################
+
+sa database naman ang naiisip ko bali dalawang csv file nalang(kunyare database yung csv hahaha)
+yung isa para sa list ng students/voters ng tup
+yung isa para sa list ng candidates
+
+sa students ang laman non ay...
+	student_id 	password	name	course,yr_section(optional haha)	voterId(-1 default) 	isRegistered(bool)	voted(bool)
+
+sa cadidates naman ...
+	name	vote_count	position	course,yr_section(optional haha)
+
+tas yung mapupunta sa fd pala e dalawang file...
+una yung text file na ang laman e yung voter id
+tas isang file na ang laman e yung mga binoto nya
+
+
+yung in-depth na paliwanag sa class siguro pag may code na tayo para madali ipaliwanag hahaha
