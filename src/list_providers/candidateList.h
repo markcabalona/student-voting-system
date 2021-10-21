@@ -1,6 +1,6 @@
 #ifndef CANDIDATE_LIST_H
 #define CANDIDATE_LIST_H
-#include<iostream>
+#include <iostream>
 #include "../models/candidate.h"
 
 #define MAX_CANDIDATE 20
@@ -10,7 +10,7 @@ typedef struct CandidateList
 {
     Candidate candidates[MAX_CANDIDATE];
     int last;
-}CandidateList;
+} CandidateList;
 
 extern CandidateList cList;
 void initializeCandidateList();
@@ -18,8 +18,8 @@ void initializeCandidateList();
 void retrieve();
 void save();
 
-//list operations
-int locate(string studentId); 
+// list operations
+int locate(string studentId);
 void makeNull();
 void display();
 int isFull();
@@ -28,12 +28,9 @@ int update(string studentId);
 
 void menu();
 
-//utilities
-char *get_string(); //returns a pointer to a string
-int get_int();      //returns an integer input from user, this filters nonnumeric characters
-float get_float();  //same as get_int
-
-
-
+// utilities
+char *get_string(); // returns a pointer to a string
+int get_int();      // returns an integer input from user, this filters nonnumeric characters
+float get_float();  // same as get_int
 
 #endif

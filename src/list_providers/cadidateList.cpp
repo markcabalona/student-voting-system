@@ -30,18 +30,22 @@ int locate(string studentId)
     return 0;
 }
 
-void display() {
+void display()
+{
     // TODO
 }
-int isFull() {
-    // TODO
-    return 0;
-}
-int isEmpty() {//di ata kailangan to
+int isFull()
+{
     // TODO
     return 0;
 }
-int update(string studentId) {
+int isEmpty()
+{ // di ata kailangan to
+    // TODO
+    return 0;
+}
+int update(string studentId)
+{
     // TODO
     return 0;
 }

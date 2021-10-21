@@ -11,9 +11,8 @@ CandidateList cList;
 int main(void)
 {
     initializeCandidateList();
-    
-    cout<<cList.last;
 
-    cout<<"GoodBye World";
-    
+    cout << cList.last;
+
+    cout << "GoodBye World";
 }
