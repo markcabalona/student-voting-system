@@ -28,20 +28,6 @@ void CandidateList::display()
 {
     // TODO
 }
-int CandidateList::isFull()
-{
-    // TODO
-    return 0;
-}
-int CandidateList::isEmpty()
-{ // di ata kailangan to
-    // TODO
-    return 0;
-}
-int CandidateList::update(string studentId)
-{
-    // TODO
-    return 0;
-}
+
 
 void CandidateList::menu() {}

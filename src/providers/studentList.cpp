@@ -7,8 +7,16 @@ using namespace std;
 //list operations defenition
 
 int StudentList::insert(Student stud){
+
+     if (isFull())
+    {
+        return -1;
+    }
+    else if (int i = locate(stud.name()) >= 0)
+    {
+        return i;
+    }
     last++;
-    // TODO
     students[last] = stud;
     return 0;
 }
@@ -21,31 +29,33 @@ void StudentList::makeNull()
 
 int StudentList::locate(string studentId)
 {
-    // TODO
-    return 0;
+    for (int i = 0; i < last + 1; i++)
+    {
+        if (students[i].studentId().compare(studentId) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
-void StudentList::display()
-{
-    // TODO
-}
 int StudentList::isFull()
 {
-    // TODO
-    return 0;
+    return last == MAX_STUDENTS;
 }
 int StudentList::isEmpty()
-{ // di ata kailangan to
-    // TODO
-    return 0;
+{ 
+    return last == -1;
 }
 int StudentList::update(string studentId)
 {
-    // TODO
+    int index = locate(studentId);
+    if (index < 0)
+    {
+        return -1;
+    }
     return 0;
 }
-
-void StudentList::menu() {}
 
 int StudentList::retrieve(){
 
@@ -53,11 +63,10 @@ int StudentList::retrieve(){
 
     if (!fp)
     {
-        cout<<"error";
-        return 0;
+        return -1;
     }
     else
-    { // if dbf reading is successfull populate the List
+    { // if csv reading is successfull populate the List
         Student tempRec;
         string id, pw, name;
         int voterId, isReg, voted;
@@ -76,21 +85,24 @@ int StudentList::retrieve(){
             token = strtok(buff, ",\n");
             while (token != NULL)
             {
+                //parse the csv
+                //csv columns looks like this
+                //student_id,pasword,name,voter_id,isRegistered,voted
                 switch (col)
                 {
-                case 0:
+                case 0://col 1
                     id = token;
                     break;
-                case 1:
+                case 1://col 2
                     pw = token;
                     break;
-                case 2:
+                case 2://col 3
                     name = token;
                     break;
-                case 3:
+                case 3://col 4
                     voterId = atoi(token);
                     break;
-                case 4:
+                case 4://col 5
                     isReg = atoi(token);
                     break;
                 case 5:
@@ -99,83 +111,16 @@ int StudentList::retrieve(){
                 default:
                     break;
                 }
-
                 col++;
                 token = strtok(NULL, ",\n");
-                
-                //printf("%d", col);
             }
-            
-            insert(Student(id, pw, name, voterId, isReg, voted));
-            cout<<line;
+            //return 0 if list is full
+            if(insert(Student(id, pw, name, voterId, isReg, voted)) < 0){
+                fclose(fp); // close the file
+                return 0;
+            }
         }
         fclose(fp); // close the file
         return 1;
     }
 }
-
-
-
-/*
-#include <iostream>
-#include "candidateList.h"
-
-using namespace std;
-
-CandidateListProvider::CandidateListProvider(){
-    makeNull();
-}
-CandidateList* CandidateListProvider::list(){
-    return _list;
-}
-int CandidateListProvider::insert(Candidate can){
-    _list->last++;
-    // TODO
-    _list->candidates[_list->last] = can;
-    return 0;
-}
-
-void CandidateListProvider::dispose()
-{
-    save();
-}
-void CandidateListProvider::makeNull()
-{
-    _list->last = -1;
-}
-void CandidateListProvider::retrieve()
-{
-    // TODO
-}
-void CandidateListProvider::save()
-{
-    // TODO
-}
-int CandidateListProvider::locate(string studentId)
-{
-    // TODO
-    return 0;
-}
-
-void CandidateListProvider::display()
-{
-    // TODO
-}
-int CandidateListProvider::isFull()
-{
-    // TODO
-    return 0;
-}
-int CandidateListProvider::isEmpty()
-{ // di ata kailangan to
-    // TODO
-    return 0;
-}
-int CandidateListProvider::update(string studentId)
-{
-    // TODO
-    return 0;
-}
-
-void CandidateListProvider::menu() {}
-*/

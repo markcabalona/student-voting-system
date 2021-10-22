@@ -1,28 +1,24 @@
 #include <iostream>
-//#include "models/candidate.h"
-//#include "providers/candidateList.h"
-//#include "providers/studentList.h"
 #include "providers/listProvider.h"
+#include "screens/homeScreen.h"
 
 using namespace std;
 
-int main(void)
-{
-    cout<<"Hello";
-    cout<<"Hello";
-    
-    ListProvider provider;
-    
-    cout<<"Hello";
-    cout<<provider.candidateList().last<<endl;
-    cout<<provider.studentList().last<<endl;
+ListProvider provider;
 
-   for (int i = 0; i <= provider.studentList().last; i++){
-       cout<<i+1<<provider.studentList().students[i].name()<<endl;
-   }
+
+int main(void)
+{   
+    //todo
+    HomeScreen();
+    
+    if (provider.user() == NULL){
+        cout<<"User is Null";
+    }
+    else cout<<"User is initialized";
+
 
     system("pause");
 
-    
-
 }
+

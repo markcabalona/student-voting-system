@@ -4,6 +4,7 @@
 
 #include "candidateList.h"
 #include "studentList.h"
+#include <future>
 
 
 using namespace std;
@@ -12,17 +13,23 @@ using namespace std;
 class ListProvider
 {
 private:
+    Student* _user = nullptr;//this will hold the content of user's flashdrive
     CandidateList _candidateList;
     StudentList _studentList;
 
 public:
-    CandidateList candidateList();
-    StudentList studentList();
-    void retrieve();
+    Student* user();
+    CandidateList candidateList();//getter, returns _candidateList
+    StudentList studentList();//getter, returns _studentList
+    int retrieve();
     void save();
+    Student checkFlashDrive();
+
 
     ListProvider();
 };
+
+extern ListProvider provider;
 
 
 #endif
