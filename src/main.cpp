@@ -1,24 +1,28 @@
 #include <iostream>
-#include "models/candidate.h"
-#include "list_providers/candidateList.h"
-#include <map>
-#include <list>
-#include <iterator>
+//#include "models/candidate.h"
+//#include "providers/candidateList.h"
+//#include "providers/studentList.h"
+#include "providers/listProvider.h"
 
 using namespace std;
-CandidateList cList;
 
 int main(void)
 {
-    initializeCandidateList();
-
-<<<<<<< HEAD
-    cout << cList.last;
-
-    cout << "GoodBye World";
-}
-=======
-    cout<<"GoodBye World";
+    cout<<"Hello";
+    cout<<"Hello";
     
+    ListProvider provider;
+    
+    cout<<"Hello";
+    cout<<provider.candidateList().last<<endl;
+    cout<<provider.studentList().last<<endl;
+
+   for (int i = 0; i <= provider.studentList().last; i++){
+       cout<<i+1<<provider.studentList().students[i].name()<<endl;
+   }
+
+    system("pause");
+
+    
+
 }
->>>>>>> 9f17ca3c44c428a4a38b380603a5acfd5a73bd64

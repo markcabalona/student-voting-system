@@ -11,6 +11,14 @@ Student::Student(string name, string studentId,string pwd)
     _name = name;
     _studentId = studentId;
 }
+Student::Student(string studentId,string pwd,string name,int voterId,bool isRegistered, bool voted){
+    _studentId = studentId;
+    _password = pwd;
+    _name = name;
+    _voterId = voterId;
+    _registered = isRegistered;
+    _voted = voted;
+}
 
 string Student::name()
 {

@@ -42,6 +42,8 @@ public:
     //ito naman ay ang class constructor meaning pag gumawa tayo ng student object
     //ito yung unang mangyayari (defined sa student.cpp)
     Student(string name,string studentId,string pwd);
+    //student_id,password,name,voter_id,isRegistered,voted
+    Student(string studentId,string pwd,string name,int voterId,bool isRegistered, bool voted);
     //ito ay default constructor para pwede tayo gumawa ng student object nang hindi pinapasahan ng kahit na anong paremeters
     Student();
 };
