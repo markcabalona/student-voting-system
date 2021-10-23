@@ -1,7 +1,7 @@
 #include <iostream>
 #include "listProvider.h"
 #include <future>
-#include<unistd.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -12,30 +12,49 @@ ListProvider::ListProvider()
     _studentList.makeNull();
     if (retrieve() < 0)
     {
+        cout << "Exiting Program..." << endl;
         system("pause");
         system("cls");
         exit(1);
     }
-    cout<<"\nPlease Insert a Flashdrive to continue..."<<endl;
-    cout<<"***(Hit Ctrl + C to exit.)***"<<endl;
-    
-    //di pa sure tong sa asynchronous calls, try lang hahaha
-    // mali ata to e hahaha
-    future<Student> temp = async(&ListProvider::checkFlashDrive,this);
-    Student temp1 = temp.get();
-    _user = &temp1;
-    
+    cout << "\nPlease Insert a Flashdrive to continue..." << endl;
+    cout << "***(Hit Ctrl + C to exit.)***" << endl;
 }
 
-Student ListProvider::checkFlashDrive(){
-    //todo
-    //wala pa ito tinetesting ko lang yung kakalabasan hahaha
-    sleep(5);
-    return Student();
+void ListProvider::checkFlashDrive()
+{
+    // todo
+
+    while (true)
+    {
+        if (!_checkFlashDriveToken) // if cancel option was chosen
+        {
+            return;
+        }
+
+        // mimicking flashdrive insertion
+        // sleep(10);
+        // break;
+    }
+
+    Student temp;
+    _user = &temp;
+    return;
 }
 
+// void ListProvider::initUser()
+// {
+//     async(launch::async, &ListProvider::checkFlashDrive, this);
+// }
 
-Student* ListProvider::user(){
+void ListProvider::cancelFlashDriveChecking()
+{
+    _checkFlashDriveToken = false;
+    userReady.wait();
+}
+
+Student *ListProvider::user()
+{
     return _user;
 }
 
@@ -53,15 +72,23 @@ int ListProvider::retrieve()
     // list's retrieve functions returns -1 if database reading has error
     // returns 1 if success
     // returns 0 if list is full
-    if (_studentList.retrieve() < 0)
+
+    // call the cadidate and student list's retrieve functions asynchronously to speed up retrieving data
+    future<int> _sListResponse = async(&StudentList::retrieve, &_studentList);
+    // TODO implement _candidateList.retrieve()
+    future<int> _cListResponse = async(&CandidateList::retrieve, &_candidateList);
+
+    if (_sListResponse.get() < 0 || _cListResponse.get() < 0)
     {
+        system("cls");
         cout << "An error occured while reading the database." << endl;
         cout << "Make sure your database is initialized.";
         return -1;
     }
     else if (_studentList.isEmpty())
     {
-        cout << "Database is empty." << endl;
+        system("cls");
+        cout << "Student Database is empty." << endl;
         return -1;
     }
     // TODO _candidateList.retrieve();

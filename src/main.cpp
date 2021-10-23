@@ -1,24 +1,18 @@
 #include <iostream>
 #include "providers/listProvider.h"
 #include "screens/homeScreen.h"
-
+#include <unistd.h>
 using namespace std;
 
 ListProvider provider;
-
-
+future<void> userReady = async(&ListProvider::checkFlashDrive, &provider);
 int main(void)
-{   
-    //todo
-    HomeScreen();
-    
-    if (provider.user() == NULL){
-        cout<<"User is Null";
-    }
-    else cout<<"User is initialized";
+{
+    // check for flashdrive asycnhronously
 
+    HomeScreen();
+
+    // todo
 
     system("pause");
-
 }
-

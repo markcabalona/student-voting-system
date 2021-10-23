@@ -6,6 +6,7 @@ using namespace std;
 
 //list operations defenition
 
+
 int StudentList::insert(Student stud){
 
      if (isFull())

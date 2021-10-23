@@ -16,6 +16,7 @@ typedef struct CandidateList
     void makeNull();
     void display();
     void menu();
+    int retrieve();
 
 } CandidateList;
 

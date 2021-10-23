@@ -3,6 +3,9 @@
 
 using namespace std;
 
+int CandidateList::retrieve(){
+    return 1;
+}
 
 
 int CandidateList::insert(Candidate can){

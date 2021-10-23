@@ -7,8 +7,8 @@
 
 class HomeScreen
 {
-    int _response;
-    
+private:
+    void _buildHomeScreen();
 public:
     HomeScreen();
     
