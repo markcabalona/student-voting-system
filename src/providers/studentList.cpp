@@ -71,11 +71,11 @@ int StudentList::retrieve(){
         Student tempRec;
         string id, pw, name;
         int voterId, isReg, voted;
-        char buff[129];
+        char buff[255];
         char *token;
         int col;
         int line = 0;
-        while (fgets(buff, 129, fp))
+        while (fgets(buff, 255, fp))
         {
             if(line == 0){
                 //we don't want to read the header

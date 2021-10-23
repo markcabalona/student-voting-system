@@ -10,7 +10,6 @@ HomeScreen::HomeScreen()
     //   for (int i = 0; i <= provider.studentList().last; i++){
     //      cout<<i+1<<provider.studentList().students[i].name()<<endl;
     //  }
-
 }
 void HomeScreen::_buildHomeScreen()
 {
@@ -30,25 +29,48 @@ void HomeScreen::_buildHomeScreen()
     {
     case 1:
     {
-        if(provider.user() == NULL){
-            cout<<"Please Insert a flashDrive."<<endl;
+        if (provider.user() == NULL)
+        {
+            cout << "Please Insert a FlashDrive." << endl;
             system("pause");
             _buildHomeScreen();
         }
-        else{
-            cout<<"Voting."<<endl;
+        else
+        {
+            if (provider.isGuestUser())
+            {
+                cout << "Please Log In first.";
+                system("pause");
+                _buildHomeScreen();
+            }
+            else
+            {
+                cout << "Vote Wisely." << endl;
+            }
         }
         break;
     }
     case 2:
     {
-        if(provider.user() == NULL){
-            cout<<"Please Insert a flashDrive."<<endl;
+        if (provider.user() == NULL)
+        {
+            cout << "Please Insert a FlashDrive." << endl;
             system("pause");
             _buildHomeScreen();
         }
-        else{
-            cout<<"Register Voting."<<endl;
+        else
+        {
+            if (provider.isGuestUser())
+            {
+                // call login page here
+                cout << "Please Log In first.";
+                system("pause");
+                _buildHomeScreen();
+            }
+            else
+            {
+                cout << "Registration." << endl;
+            }
         }
 
         break;
@@ -56,14 +78,16 @@ void HomeScreen::_buildHomeScreen()
     case 3:
     {
         provider.cancelFlashDriveChecking();
-        cout<<"Cancelled"<<endl;
-        if(provider.user() == NULL){
-            cout<<"User is NULL."<<endl;
+        cout << "Cancelled" << endl;
+        if (provider.user() == NULL)
+        {
+            cout << "User is NULL." << endl;
         }
-        else{
-            cout<<"user is not NULL."<<endl;
+        else
+        {
+            cout << "user is not NULL." << endl;
         }
-        
+
         break;
     }
 

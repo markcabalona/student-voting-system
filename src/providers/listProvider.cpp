@@ -2,6 +2,9 @@
 #include "listProvider.h"
 #include <future>
 #include <unistd.h>
+#include <fstream>
+#include <sstream>
+#include <string.h>
 
 using namespace std;
 
@@ -21,24 +24,87 @@ ListProvider::ListProvider()
     cout << "***(Hit Ctrl + C to exit.)***" << endl;
 }
 
+bool ListProvider::isGuestUser()
+{
+    return _isGuestUser;
+}
+
 void ListProvider::checkFlashDrive()
 {
-    // todo
+    char *userInfoPath = strdup("e:/myInfo.csv");
 
-    while (true)
+    // checks if flashdrive is inserted
+    // if a flashdrive is inserted, opens a myinfo.csv file for writing
+    //  meaning myinfo.csv will always be created in the inserted flashdrive
+    FILE *fd = fopen(userInfoPath, "r+");
+    while (!fd)
     {
+        fd = fopen(userInfoPath, "r+");
         if (!_checkFlashDriveToken) // if cancel option was chosen
         {
             return;
         }
-
-        // mimicking flashdrive insertion
-        // sleep(10);
-        // break;
+    }
+    char *buff = (char *)malloc(255 * sizeof(char));
+    int row = 0;
+    while (fgets(buff, 255, fd))
+    {
+        row++;
     }
 
-    Student temp;
+    if (row == 0)
+    {
+        fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
+        Student temp = Student();
+        _user = &temp;
+        return;
+    }
+    else if (row == 1)
+    {
+        Student temp = Student();
+        _user = &temp;
+        return;
+    }
+    fclose(fd);
+
+    fd = fopen(userInfoPath, "r");
+    // end of checking
+    string id, pw, name;
+    int voterId, isReg, voted;
+    int col = 0;
+    char *token = strtok(buff, ",");
+    while (token != NULL)
+    {
+        switch (col)
+        {
+        case 0: // col 1
+            id = token;
+            break;
+        case 1: // col 2
+            pw = token;
+            break;
+        case 2: // col 3
+            name = token;
+            break;
+        case 3: // col 4
+            voterId = atoi(token);
+            break;
+        case 4: // col 5
+            isReg = atoi(token);
+            break;
+        case 5:
+            voted = atoi(token);
+            break;
+        default:
+            break;
+        }
+        col++;
+        token = strtok(NULL, ",");
+    }
+    Student temp = Student(id, pw, name, voterId, isReg, voted);
     _user = &temp;
+    fclose(fd);
+    _isGuestUser = false;
     return;
 }
 

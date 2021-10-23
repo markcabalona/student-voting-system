@@ -5,9 +5,8 @@ using namespace std;
 
 Student::Student() {}
 
-Student::Student(string name, string studentId,string pwd)
+Student::Student(string name, string studentId)
 {
-    _password = pwd;
     _name = name;
     _studentId = studentId;
 }

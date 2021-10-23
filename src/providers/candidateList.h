@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../models/candidate.h"
 #define MAX_CANDIDATES 50
-#define CANDIDATES_DB_FILEPATH ""
+#define CANDIDATES_DB_FILEPATH "../db/candidates.csv"
 
 using namespace std;
 
@@ -14,6 +14,8 @@ typedef struct CandidateList
     int locate(string studentId);
     int insert(Candidate can);
     void makeNull();
+    int isFull();
+    int isEmpty();
     void display();
     void menu();
     int retrieve();

@@ -15,6 +15,7 @@ private:
     bool _checkFlashDriveToken = true;
     CandidateList _candidateList;
     StudentList _studentList;
+    bool _isGuestUser = true;
 
 public:
     void checkFlashDrive();
@@ -25,6 +26,7 @@ public:
     StudentList studentList();     // getter, returns _studentList
     int retrieve();
     void save();
+    bool isGuestUser();
 
     ListProvider();
 };

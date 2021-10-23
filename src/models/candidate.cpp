@@ -3,18 +3,14 @@
 
 using namespace std;
 
-Candidate::Candidate() : Student()
+Candidate::Candidate()
 {
 }
 
-Candidate::Candidate(string position, string name, string studentId, string pwd) : Student(name, studentId, pwd)
+Candidate::Candidate(int ballotId, string name, string studentId, string position, int voutCount) :Student(name,studentId)
 {
+    _ballotId = ballotId;
     _position = position;
-}
-
-void Candidate::setVoteCount(int vcount)
-{
-    _voteCount = vcount;
 }
 
 void Candidate::incrementVoteCount()

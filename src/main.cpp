@@ -5,11 +5,11 @@
 using namespace std;
 
 ListProvider provider;
+// check for flashdrive asycnhronously
 future<void> userReady = async(&ListProvider::checkFlashDrive, &provider);
 int main(void)
 {
-    // check for flashdrive asycnhronously
-
+    
     HomeScreen();
 
     // todo
