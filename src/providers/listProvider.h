@@ -27,6 +27,7 @@ public:
     int retrieve();
     void save();
     bool isGuestUser();
+    void setUser(Student stud);
 
     ListProvider();
 };

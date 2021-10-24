@@ -32,7 +32,7 @@ int StudentList::locate(string studentId)
 {
     for (int i = 0; i < last + 1; i++)
     {
-        if (students[i].studentId().compare(studentId) == 0)
+        if (studentId.compare(students[i].studentId()) == 0)
         {
             return i;
         }

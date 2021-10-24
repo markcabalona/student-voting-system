@@ -101,17 +101,15 @@ void ListProvider::checkFlashDrive()
         col++;
         token = strtok(NULL, ",");
     }
-    Student temp = Student(id, pw, name, voterId, isReg, voted);
-    _user = &temp;
+    _user = new Student(id, pw, name, voterId, isReg, voted);
+    // cout<<_user->registered();
+    // cout<<_user->name();
+    // system("pause");
     fclose(fd);
     _isGuestUser = false;
     return;
 }
 
-// void ListProvider::initUser()
-// {
-//     async(launch::async, &ListProvider::checkFlashDrive, this);
-// }
 
 void ListProvider::cancelFlashDriveChecking()
 {
@@ -122,6 +120,10 @@ void ListProvider::cancelFlashDriveChecking()
 Student *ListProvider::user()
 {
     return _user;
+}
+
+void ListProvider::setUser(Student stud){
+    _user = &stud;
 }
 
 CandidateList ListProvider::candidateList()

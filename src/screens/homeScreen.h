@@ -9,6 +9,10 @@ class HomeScreen
 {
 private:
     void _buildHomeScreen();
+    void _loginPage();
+    void _signUpPage();
+    void _voteScreen();
+    void _registrationScreen();
 public:
     HomeScreen();
     
