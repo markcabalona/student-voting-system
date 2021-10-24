@@ -11,7 +11,7 @@ typedef struct StudentList
 {
     Student students[MAX_STUDENTS];
     int last;
-    int locate(string studentId);
+    int locate(string *studentId,int* voterId);
     int insert(Student stud);
     void makeNull();
     void display();
@@ -20,6 +20,7 @@ typedef struct StudentList
     int update(string studentId);
     void menu();
     int retrieve();
+    int save();
 
 } StudentList;
 

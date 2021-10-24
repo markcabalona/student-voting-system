@@ -11,7 +11,4 @@ int main(void)
 {
     HomeScreen();
 
-    // todo
-
-    system("pause");
 }

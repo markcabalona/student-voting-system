@@ -16,6 +16,7 @@ private:
     CandidateList _candidateList;
     StudentList _studentList;
     bool _isGuestUser = true;
+    void _saveUser();//save user's info to user's fd
 
 public:
     void checkFlashDrive();
@@ -30,6 +31,7 @@ public:
     void setUser(Student stud);
 
     ListProvider();
+    ~ListProvider();
 };
 
 extern ListProvider provider;

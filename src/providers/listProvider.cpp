@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string.h>
+#define FLASHDRIVE_PATH "e:/myInfo.csv"
 
 using namespace std;
 
@@ -24,6 +25,17 @@ ListProvider::ListProvider()
     cout << "***(Hit Ctrl + C to exit.)***" << endl;
 }
 
+ListProvider::~ListProvider(){
+    // FILE *fp = fopen("testDestruct.txt","w");
+    // fclose(fp);
+    if(_studentList.save()){
+        cout<<"Database is Updated"<<endl;
+        system("pause");
+
+    }
+    _saveUser();
+    // call save functions here;
+}
 bool ListProvider::isGuestUser()
 {
     return _isGuestUser;
@@ -31,15 +43,14 @@ bool ListProvider::isGuestUser()
 
 void ListProvider::checkFlashDrive()
 {
-    char *userInfoPath = strdup("e:/myInfo.csv");
 
     // checks if flashdrive is inserted
     // if a flashdrive is inserted, opens a myinfo.csv file for writing
     //  meaning myinfo.csv will always be created in the inserted flashdrive
-    FILE *fd = fopen(userInfoPath, "r+");
+    FILE *fd = fopen(FLASHDRIVE_PATH, "r+");
     while (!fd)
     {
-        fd = fopen(userInfoPath, "r+");
+        fd = fopen(FLASHDRIVE_PATH, "r+");
         if (!_checkFlashDriveToken) // if cancel option was chosen
         {
             return;
@@ -67,7 +78,7 @@ void ListProvider::checkFlashDrive()
     }
     fclose(fd);
 
-    fd = fopen(userInfoPath, "r");
+    fd = fopen(FLASHDRIVE_PATH, "r");
     // end of checking
     string id, pw, name;
     int voterId, isReg, voted;
@@ -110,6 +121,11 @@ void ListProvider::checkFlashDrive()
     return;
 }
 
+void ListProvider::_saveUser(){
+    FILE *fd = fopen(FLASHDRIVE_PATH,"w");
+    fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
+    fprintf(fd,"%s,%s,%s,%d,%d,%d",_user->studentId().c_str(),_user->password().c_str(),_user->name().c_str(),_user->voterId(),_user->registered(),_user->voted());
+}
 
 void ListProvider::cancelFlashDriveChecking()
 {
@@ -123,7 +139,9 @@ Student *ListProvider::user()
 }
 
 void ListProvider::setUser(Student stud){
-    _user = &stud;
+    //student_id,password,name,voter_id,isRegistered,voted
+    _user = new Student(stud.studentId(),stud.password(),stud.name(),stud.voterId(),stud.registered(),stud.voted());
+    _isGuestUser = false;
 }
 
 CandidateList ListProvider::candidateList()

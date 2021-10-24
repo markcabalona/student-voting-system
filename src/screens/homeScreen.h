@@ -13,6 +13,7 @@ private:
     void _signUpPage();
     void _voteScreen();
     void _registrationScreen();
+    int _generateVoterId();
 public:
     HomeScreen();
     

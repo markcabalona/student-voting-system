@@ -1,6 +1,7 @@
 
 #include "homeScreen.h"
 #include <unistd.h>
+#include<ctime>
 
 HomeScreen::HomeScreen()
 {
@@ -29,7 +30,6 @@ void HomeScreen::_loginPage()
         if (pwd.compare(provider.user()->password()) == 0)
         {
             cout << "Verified" << endl;
-            system("Pause");
             break;
         }
         trials++;
@@ -47,13 +47,13 @@ void HomeScreen::_signUpPage()
     string id;
     cin >> id;
     int index;
-    if ((index = provider.studentList().locate(id)) < 0)
+    if ((index = provider.studentList().locate(&id,nullptr)) < 0)
     {
         cout << "Student ID is invalid." << endl;
         system("pause");
         _buildHomeScreen();
     }
-    
+
     else
     {
         cout << "   Signed Up" << endl;
@@ -65,9 +65,9 @@ void HomeScreen::_signUpPage()
              << "Name: " << provider.user()->name() << endl;
         cout << "Student ID: " << provider.user()->name() << endl;
         cout << "Default Password: " << provider.user()->password() << endl;
-        system("Pause");
     }
 }
+
 void HomeScreen::_voteScreen()
 {
     if (provider.user() == NULL)
@@ -86,6 +86,7 @@ void HomeScreen::_voteScreen()
         }
         else
         {
+            // todo voting system
             cout << "Vote Wisely." << endl;
             system("pause");
         }
@@ -120,9 +121,25 @@ void HomeScreen::_registrationScreen()
         else
         {
             // generate voter id
+            provider.user()->setVoterId(_generateVoterId());
+            provider.user()->setRegistered(true);
+            cout<<"Your voter ID is: "<< provider.user()->voterId()<<endl;
+            system("pause");
             _buildHomeScreen();
         }
     }
+}
+
+int HomeScreen::_generateVoterId()
+{
+    srand((unsigned)time(0));
+    int temp = 1000 + rand() % 9000;
+    while (provider.studentList().locate(nullptr,&temp) >= 0)
+    {
+        temp = 1000 + rand() % 9000;
+    }
+    return temp;
+
 }
 
 void HomeScreen::_buildHomeScreen()
@@ -161,7 +178,7 @@ void HomeScreen::_buildHomeScreen()
         }
         else
         {
-            cout << "========================Log in=========================" << endl;
+            cout << "========================Profile=========================" << endl;
 
             cout << "Name: " << provider.user()->name();
             cout << "Student Id: " << provider.user()->studentId();
