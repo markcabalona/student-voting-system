@@ -30,11 +30,9 @@ ListProvider::~ListProvider(){
 
     if(_studentList.save()){
         cout<<"Database is Updated"<<endl;
-        system("pause");
     }
     if(_candidateList.save()){
         cout<<"Candidate DB is Updated"<<endl;
-        system("pause");
     }
     _saveUser();
     // call save functions here;
@@ -52,20 +50,20 @@ void ListProvider::checkFlashDrive()
     // checks if flashdrive is inserted
     // if a flashdrive is inserted, opens a myinfo.csv file for writing
     //  meaning myinfo.csv will always be created in the inserted flashdrive
-    FILE *fd = fopen(FLASHDRIVE_PATH, "w");
+    FILE *fd = fopen(FLASHDRIVE_PATH, "a+");
     while (!fd)
     {
-        fd = fopen(FLASHDRIVE_PATH, "w");
+        fd = fopen(FLASHDRIVE_PATH, "a+");
         if (!_checkFlashDriveToken) // if cancel option was chosen
         {
             fclose(fd);
             return;
         }
     }
-    fclose(fd);
-    fd = fopen(FLASHDRIVE_PATH,"r");
+    // fclose(fd);
+    // fd = fopen(FLASHDRIVE_PATH,"r");
     // pag nandito na ibigsabihin may nakainsert na na flashdrive
-    char *buff = (char *)malloc(255 * sizeof(char));
+    char buff[255];
     int row = 0;
     while (fgets(buff, 255, fd))
     {
@@ -86,11 +84,12 @@ void ListProvider::checkFlashDrive()
     {
         Student temp = Student();
         _user = &temp;
+        fclose(fd);
         return;
     }
     //fclose(fd);
 
-    fd = fopen(FLASHDRIVE_PATH, "r");
+    //fd = fopen(FLASHDRIVE_PATH, "r");
     // end of checking
     string id, pw, name;
     int voterId, isReg, voted;

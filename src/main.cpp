@@ -10,4 +10,6 @@ future<void> userReady = async(&ListProvider::checkFlashDrive, &provider);
 int main(void)
 {
     HomeScreen();
+
+    system("pause");
 }
