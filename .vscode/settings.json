@@ -12,6 +12,7 @@
         "future": "cpp",
         "iosfwd": "cpp",
         "fstream": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "new": "cpp"
     }
 }

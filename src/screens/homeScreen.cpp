@@ -96,7 +96,6 @@ void HomeScreen::_voteScreen()
             // todo voting system
             _votingSystem();
             provider.user()->setVoted(true);
-            cout << "Vote Wisely." << endl;
             system("pause");
         }
     }
@@ -107,6 +106,9 @@ void HomeScreen::_votingSystem()
     cout << "===============Voting Wisely===============" << endl;
 
     cout << "Vote For" << endl;
+
+    //posNames = [pres,vp]
+    //poscount = 2
     for (int i = 0; i < provider.candidateList()->positionCount(); i++)
     {
         cout << "\t\t" << provider.candidateList()->positionNames()[i] << endl
@@ -138,9 +140,7 @@ void HomeScreen::_votingSystem()
             cout << "Who is your " << provider.candidateList()->positionNames()[i] << ": ";
             cin >> vote;
         }
-        cout<<provider.candidateList()->candidates[index].voteCount()<<endl;
-        provider.candidateList()->candidates[index].incrementVoteCount();//bat ayaw neto gumana puta hahah
-        cout<<provider.candidateList()->candidates[index].voteCount()<<endl;
+        provider.candidateList()->candidates[index].incrementVoteCount();
     }
 }
 int HomeScreen::validateVote(int ballotID, string pos)
@@ -185,6 +185,7 @@ void HomeScreen::_registrationScreen()
         {
             // generate voter id
             provider.user()->setVoterId(_generateVoterId());
+
             provider.user()->setRegistered(true);
             cout << "Your voter ID is: " << provider.user()->voterId() << endl;
             system("pause");
@@ -232,13 +233,13 @@ void HomeScreen::_buildHomeScreen()
     }
     case 3:
     {
-        if (provider.user() == NULL)
+        if (provider.user() == NULL)//wala pang nakainsert na fd
         {
             cout << "Please Insert a FlashDrive." << endl;
             sleep(1);
             _buildHomeScreen();
         }
-        else
+        else//
         {
             cout << "========================Profile=========================" << endl;
 

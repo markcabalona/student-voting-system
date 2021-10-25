@@ -33,7 +33,7 @@ int StudentList::locate(string *studentId, int *voterId)
     {
         for (int i = 0; i < last + 1; i++)
         {
-            if ((*studentId).compare(students[i].studentId()) == 0)
+            if ((*studentId).compare(students[i].studentId()) ==0 )
             {
                 return i;
             }

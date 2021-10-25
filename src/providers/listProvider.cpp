@@ -21,8 +21,6 @@ ListProvider::ListProvider()
         system("cls");
         exit(1);
     }
-    cout << "\nPlease Insert a Flashdrive to continue..." << endl;
-    cout << "***(Hit Ctrl + C to exit.)***" << endl;
 }
 
 ListProvider::~ListProvider(){
@@ -33,7 +31,6 @@ ListProvider::~ListProvider(){
     if(_studentList.save()){
         cout<<"Database is Updated"<<endl;
         system("pause");
-
     }
     if(_candidateList.save()){
         cout<<"Candidate DB is Updated"<<endl;
@@ -55,25 +52,32 @@ void ListProvider::checkFlashDrive()
     // checks if flashdrive is inserted
     // if a flashdrive is inserted, opens a myinfo.csv file for writing
     //  meaning myinfo.csv will always be created in the inserted flashdrive
-    FILE *fd = fopen(FLASHDRIVE_PATH, "r+");
+    FILE *fd = fopen(FLASHDRIVE_PATH, "w");
     while (!fd)
     {
-        fd = fopen(FLASHDRIVE_PATH, "r+");
+        fd = fopen(FLASHDRIVE_PATH, "w");
         if (!_checkFlashDriveToken) // if cancel option was chosen
         {
+            fclose(fd);
             return;
         }
     }
+    fclose(fd);
+    fd = fopen(FLASHDRIVE_PATH,"r");
+    // pag nandito na ibigsabihin may nakainsert na na flashdrive
     char *buff = (char *)malloc(255 * sizeof(char));
     int row = 0;
     while (fgets(buff, 255, fd))
     {
         row++;
     }
+    fclose(fd);
 
     if (row == 0)
     {
+        fd = fopen(FLASHDRIVE_PATH,"w");
         fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
+        fclose(fd);
         Student temp = Student();
         _user = &temp;
         return;
@@ -84,14 +88,14 @@ void ListProvider::checkFlashDrive()
         _user = &temp;
         return;
     }
-    fclose(fd);
+    //fclose(fd);
 
     fd = fopen(FLASHDRIVE_PATH, "r");
     // end of checking
     string id, pw, name;
     int voterId, isReg, voted;
     int col = 0;
-    char *token = strtok(buff, ",");
+    char *token = strtok(buff, ",");//buff = "TUPM-20-0621,BUENAVENTURA,BUENAVENTURA NICOLE,-1,0,0"
     while (token != NULL)
     {
         switch (col)
@@ -121,9 +125,6 @@ void ListProvider::checkFlashDrive()
         token = strtok(NULL, ",");
     }
     _user = new Student(id, pw, name, voterId, isReg, voted);
-    // cout<<_user->registered();
-    // cout<<_user->name();
-    // system("pause");
     fclose(fd);
     _isGuestUser = false;
     return;
@@ -133,6 +134,7 @@ void ListProvider::_saveUser(){
     FILE *fd = fopen(FLASHDRIVE_PATH,"w");
     fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
     fprintf(fd,"%s,%s,%s,%d,%d,%d",_user->studentId().c_str(),_user->password().c_str(),_user->name().c_str(),_user->voterId(),_user->registered(),_user->voted());
+    fclose(fd);
 }
 
 void ListProvider::cancelFlashDriveChecking()
