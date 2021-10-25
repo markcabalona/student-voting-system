@@ -23,21 +23,24 @@ ListProvider::ListProvider()
     }
 }
 
-ListProvider::~ListProvider(){
-    // FILE *fp = fopen("testDestruct.txt","w");
-    // fclose(fp);
-    _studentList.update(_user->studentId(),*_user);
+ListProvider::~ListProvider()
+{
+    if (!_isGuestUser)
+    {
+        _studentList.update(_user->studentId(), *_user);
+        _saveUser();
+    }
 
-    if(_studentList.save()){
-        cout<<"Database is Updated"<<endl;
+    if (_studentList.save())
+    {
+        cout << "Database is Updated" << endl;
     }
-    if(_candidateList.save()){
-        cout<<"Candidate DB is Updated"<<endl;
+    if (_candidateList.save())
+    {
+        cout << "Candidate DB is Updated" << endl;
     }
-    _saveUser();
-    // call save functions here;
+    system("pause");
 }
-
 
 bool ListProvider::isGuestUser()
 {
@@ -73,7 +76,7 @@ void ListProvider::checkFlashDrive()
 
     if (row == 0)
     {
-        fd = fopen(FLASHDRIVE_PATH,"w");
+        fd = fopen(FLASHDRIVE_PATH, "w");
         fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
         fclose(fd);
         Student temp = Student();
@@ -87,14 +90,14 @@ void ListProvider::checkFlashDrive()
         fclose(fd);
         return;
     }
-    //fclose(fd);
+    // fclose(fd);
 
-    //fd = fopen(FLASHDRIVE_PATH, "r");
-    // end of checking
+    // fd = fopen(FLASHDRIVE_PATH, "r");
+    //  end of checking
     string id, pw, name;
     int voterId, isReg, voted;
     int col = 0;
-    char *token = strtok(buff, ",");//buff = "TUPM-20-0621,BUENAVENTURA,BUENAVENTURA NICOLE,-1,0,0"
+    char *token = strtok(buff, ","); // buff = "TUPM-20-0621,BUENAVENTURA,BUENAVENTURA NICOLE,-1,0,0"
     while (token != NULL)
     {
         switch (col)
@@ -129,17 +132,18 @@ void ListProvider::checkFlashDrive()
     return;
 }
 
-void ListProvider::_saveUser(){
-    FILE *fd = fopen(FLASHDRIVE_PATH,"w");
+void ListProvider::_saveUser()
+{
+    FILE *fd = fopen(FLASHDRIVE_PATH, "w");
     fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
-    fprintf(fd,"%s,%s,%s,%d,%d,%d",_user->studentId().c_str(),_user->password().c_str(),_user->name().c_str(),_user->voterId(),_user->registered(),_user->voted());
+    fprintf(fd, "%s,%s,%s,%d,%d,%d", _user->studentId().c_str(), _user->password().c_str(), _user->name().c_str(), _user->voterId(), _user->registered(), _user->voted());
     fclose(fd);
 }
 
 void ListProvider::cancelFlashDriveChecking()
 {
     _checkFlashDriveToken = false;
-    userReady.wait();
+    userReady.get();
 }
 
 Student *ListProvider::user()
@@ -147,13 +151,14 @@ Student *ListProvider::user()
     return _user;
 }
 
-void ListProvider::setUser(Student stud){
-    //student_id,password,name,voter_id,isRegistered,voted
-    _user = new Student(stud.studentId(),stud.password(),stud.name(),stud.voterId(),stud.registered(),stud.voted());
+void ListProvider::setUser(Student stud)
+{
+    // student_id,password,name,voter_id,isRegistered,voted
+    _user = new Student(stud.studentId(), stud.password(), stud.name(), stud.voterId(), stud.registered(), stud.voted());
     _isGuestUser = false;
 }
 
-CandidateList* ListProvider::candidateList()
+CandidateList *ListProvider::candidateList()
 {
     return &_candidateList;
 }
@@ -190,4 +195,3 @@ int ListProvider::retrieve()
 
     return 0;
 }
-

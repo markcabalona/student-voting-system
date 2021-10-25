@@ -29,8 +29,8 @@ public:
     bool isGuestUser();
     void setUser(Student stud);
 
-    ListProvider();
-    ~ListProvider();
+    ListProvider();// constructor this will retrieve data from database and populate the lists
+    ~ListProvider(); // destructor(this will save everything in our list provider to the database and the flashdrive)
 };
 
 extern ListProvider provider;

@@ -8,16 +8,16 @@
 class HomeScreen
 {
 private:
-    void _buildHomeScreen();
-    void _loginPage();
-    void _signUpPage();
-    void _voteScreen();
-    void _registrationScreen();
-    int _generateVoterId();
-    void _votingSystem();
-    int validateVote(int ballotID,string pos);
+    void _buildHomeScreen();//the main page where the user can vote, register, and see his/her profile
+    void _loginPage();//
+    void _signUpPage();//
+    void _voteScreen();//voting system validations happens here
+    void _registrationScreen();// registration
+    int _generateVoterId();// returns a 4 digit integer that will serve as voter id of the user
+    void _votingSystem();//actual voting 
+    int validateVote(int ballotID,string pos);//validating the candidate's ballot id and posiiton
 public:
-    HomeScreen();
+    HomeScreen();//constructor
     
 };
 

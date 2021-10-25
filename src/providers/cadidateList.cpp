@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int CandidateList::retrieve()
+int CandidateList::retrieve()//returns -1 on error, returns 0 on success
 {
     fstream fs(CANDIDATES_DB_FILEPATH);
 
@@ -19,6 +19,7 @@ int CandidateList::retrieve()
         string name, pos, studId;
         int ballotId, voteCount;
         int col, row = 0;
+        //parse the csv file row by row
         while (getline(fs, line))
         {
             stringstream s(line);
@@ -31,6 +32,7 @@ int CandidateList::retrieve()
             }
 
             col = 0;
+            //parse a row 
             while (getline(s, token, ','))
             {
                 switch (col)
@@ -56,7 +58,7 @@ int CandidateList::retrieve()
                 col++;
             }
             _addNewPosition(pos);
-            if (insert(Candidate(ballotId, name, studId, pos, voteCount)))
+            if (insert(Candidate(ballotId, name, studId, pos, voteCount)) < 0)//if insrtion has error
             {
                 fs.close();
                 return 0;
@@ -157,10 +159,3 @@ int CandidateList::locate(string *studentId, int *ballotID)
     }
     return -1;
 }
-
-void CandidateList::display()
-{
-    // TODO
-}
-
-void CandidateList::menu() {}

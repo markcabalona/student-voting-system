@@ -12,23 +12,23 @@ typedef struct CandidateList
 {
     private:
         int _positionCount = 0;//number of positions
-        vector<string>_positionNames{};
-        int _addNewPosition(string posName);
+        //this is just an array of strings that may varyy in size
+        vector<string>_positionNames{};//list of positions
+        int _addNewPosition(string posName);//append 
     public:
-    int positionCount();
-    vector<string> positionNames();
+    int positionCount();//getter for _positionCount
+    vector<string> positionNames();//getter for _positionNames
     
     Candidate candidates[MAX_CANDIDATES];
-    int last;
-    int locate(string *studentId,int* ballotId);
+    int last;//this is just the candidates.length
+    //returns the index of the candidate if found, returns -1 otherwise
+    int locate(string *studentId,int* ballotId);//one parameter must be nullptr
     int insert(Candidate can);
     void makeNull();
     int isFull();
     int isEmpty();
-    void display();
-    void menu();
-    int retrieve();
-    int save();
+    int retrieve();//populate the candidates(read from a csv file)
+    int save();//saves the content of candidates back to the csv file
 
 } CandidateList;
 
