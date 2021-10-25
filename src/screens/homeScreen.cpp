@@ -1,7 +1,7 @@
 
 #include "homeScreen.h"
 #include <unistd.h>
-#include<ctime>
+#include <ctime>
 
 HomeScreen::HomeScreen()
 {
@@ -47,7 +47,7 @@ void HomeScreen::_signUpPage()
     string id;
     cin >> id;
     int index;
-    if ((index = provider.studentList().locate(&id,nullptr)) < 0)
+    if ((index = provider.studentList().locate(&id, nullptr)) < 0)
     {
         cout << "Student ID is invalid." << endl;
         system("pause");
@@ -84,12 +84,75 @@ void HomeScreen::_voteScreen()
             system("pause");
             _buildHomeScreen();
         }
+        else if(provider.user()->voted())
+        {
+            cout<<"You already voted. You cannot vote again."<<endl;
+            system("pause");
+            _buildHomeScreen();
+        }
+        
         else
         {
             // todo voting system
+            _votingSystem();
+            provider.user()->setVoted(true);
             cout << "Vote Wisely." << endl;
             system("pause");
         }
+    }
+}
+void HomeScreen::_votingSystem()
+{
+    system("cls");
+    cout << "===============Voting Wisely===============" << endl;
+
+    cout << "Vote For" << endl;
+    for (int i = 0; i < provider.candidateList()->positionCount(); i++)
+    {
+        cout << "\t\t" << provider.candidateList()->positionNames()[i] << endl
+             << endl;
+        for (int j = 0; j <= provider.candidateList()->last; j++)
+        {
+            if (provider.candidateList()->positionNames()[i].compare(provider.candidateList()->candidates[j].position()) == 0)
+            {
+                cout << "   " << provider.candidateList()->candidates[j].ballotId() << "  "
+                     << provider.candidateList()->candidates[j].name() << endl;
+            }
+        }
+        cout << endl
+             << endl;
+    }
+
+    cout << "\t***Enter ballot ID to vote***" << endl;
+    int vote;
+    for (int i = 0; i < provider.candidateList()->positionCount(); i++)
+    {
+        cout << "Who is your " << provider.candidateList()->positionNames()[i] << ": ";
+        cin >> vote;
+        int index;
+        while ((index = validateVote(vote, provider.candidateList()->positionNames()[i])) < 0)
+        {
+            // update candidate here
+            cout << endl
+                 << "Not a valid ballot ID" << endl;
+            cout << "Who is your " << provider.candidateList()->positionNames()[i] << ": ";
+            cin >> vote;
+        }
+        cout<<provider.candidateList()->candidates[index].voteCount()<<endl;
+        provider.candidateList()->candidates[index].incrementVoteCount();//bat ayaw neto gumana puta hahah
+        cout<<provider.candidateList()->candidates[index].voteCount()<<endl;
+    }
+}
+int HomeScreen::validateVote(int ballotID, string pos)
+{
+    int index = provider.candidateList()->locate(nullptr, &ballotID);
+    if (pos.compare(provider.candidateList()->candidates[index].position()) == 0)
+    {
+        return index;
+    }
+    else
+    {
+        return -1;
     }
 }
 
@@ -123,7 +186,7 @@ void HomeScreen::_registrationScreen()
             // generate voter id
             provider.user()->setVoterId(_generateVoterId());
             provider.user()->setRegistered(true);
-            cout<<"Your voter ID is: "<< provider.user()->voterId()<<endl;
+            cout << "Your voter ID is: " << provider.user()->voterId() << endl;
             system("pause");
             _buildHomeScreen();
         }
@@ -134,12 +197,11 @@ int HomeScreen::_generateVoterId()
 {
     srand((unsigned)time(0));
     int temp = 1000 + rand() % 9000;
-    while (provider.studentList().locate(nullptr,&temp) >= 0)
+    while (provider.studentList().locate(nullptr, &temp) >= 0)
     {
         temp = 1000 + rand() % 9000;
     }
     return temp;
-
 }
 
 void HomeScreen::_buildHomeScreen()

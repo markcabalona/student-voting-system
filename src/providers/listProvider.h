@@ -23,10 +23,9 @@ public:
     void cancelFlashDriveChecking();
 
     Student *user();
-    CandidateList candidateList(); // getter, returns _candidateList
+    CandidateList* candidateList(); // getter, returns _candidateList
     StudentList studentList();     // getter, returns _studentList
     int retrieve();
-    void save();
     bool isGuestUser();
     void setUser(Student stud);
 

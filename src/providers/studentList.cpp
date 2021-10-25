@@ -60,14 +60,16 @@ int StudentList::isEmpty()
 {
     return last == -1;
 }
-int StudentList::update(string studentId)
+int StudentList::update(string studentId,Student stud)
 {
     int index = locate(&studentId, nullptr);
     if (index < 0)
     {
         return -1;
     }
-    return 0;
+    //student_id,password,name,voter_id,isRegistered,voted
+    students[index] = stud;//Student(stud.studentId(),stud.password(),stud.name(),stud.voterId(),stud.registered(),stud.voted());
+    return 1;
 }
 
 int StudentList::retrieve()

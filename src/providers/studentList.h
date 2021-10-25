@@ -17,7 +17,7 @@ typedef struct StudentList
     void display();
     int isFull();
     int isEmpty();
-    int update(string studentId);
+    int update(string studentId,Student stud);
     void menu();
     int retrieve();
     int save();

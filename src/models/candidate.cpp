@@ -7,10 +7,11 @@ Candidate::Candidate()
 {
 }
 
-Candidate::Candidate(int ballotId, string name, string studentId, string position, int voutCount) :Student(name,studentId)
+Candidate::Candidate(int ballotId, string name, string studentId, string position, int voteCount) :Student(name,studentId)
 {
     _ballotId = ballotId;
     _position = position;
+    _voteCount = voteCount;
 }
 
 void Candidate::incrementVoteCount()
@@ -25,4 +26,7 @@ string Candidate::position()
 int Candidate::voteCount()
 {
     return _voteCount;
+}
+int Candidate::ballotId(){
+    return _ballotId;
 }

@@ -28,14 +28,22 @@ ListProvider::ListProvider()
 ListProvider::~ListProvider(){
     // FILE *fp = fopen("testDestruct.txt","w");
     // fclose(fp);
+    _studentList.update(_user->studentId(),*_user);
+
     if(_studentList.save()){
         cout<<"Database is Updated"<<endl;
         system("pause");
 
     }
+    if(_candidateList.save()){
+        cout<<"Candidate DB is Updated"<<endl;
+        system("pause");
+    }
     _saveUser();
     // call save functions here;
 }
+
+
 bool ListProvider::isGuestUser()
 {
     return _isGuestUser;
@@ -144,9 +152,9 @@ void ListProvider::setUser(Student stud){
     _isGuestUser = false;
 }
 
-CandidateList ListProvider::candidateList()
+CandidateList* ListProvider::candidateList()
 {
-    return _candidateList;
+    return &_candidateList;
 }
 StudentList ListProvider::studentList()
 {
@@ -181,7 +189,4 @@ int ListProvider::retrieve()
 
     return 0;
 }
-void ListProvider::save()
-{
-    // TODO
-}
+

@@ -55,7 +55,8 @@ int CandidateList::retrieve()
                 }
                 col++;
             }
-            if (insert(Candidate(ballotId, name, pos, studId, voteCount)))
+            _addNewPosition(pos);
+            if (insert(Candidate(ballotId, name, studId, pos, voteCount)))
             {
                 fs.close();
                 return 0;
@@ -66,13 +67,49 @@ int CandidateList::retrieve()
     return 0;
 }
 
+int CandidateList::save(){
+    FILE *fp = fopen(CANDIDATES_DB_FILEPATH,"w");
+
+    fprintf(fp,"ballot_id,name,position,student_id,vote_count\n");
+    for (int i = 0; i<= last; i++){
+        fprintf(fp,"%d,%s,%s,%s,%d\n",candidates[i].ballotId(),candidates[i].name().c_str(),candidates[i].position().c_str(),candidates[i].studentId().c_str(),candidates[i].voteCount());
+    }
+
+    return 1;
+}
+
+int CandidateList::_addNewPosition(string posName)
+{
+    for (int i = 0; i < _positionCount; i++)
+    {
+        if (posName.compare(_positionNames[i]) == 0)
+        {
+            return -1;
+        }
+    }
+    _positionNames.push_back(posName);
+    _positionCount++;
+    return 0;
+}
+
+int CandidateList::positionCount()
+{
+    return _positionCount;
+}
+
+vector<string> CandidateList::positionNames()
+{
+    return _positionNames;
+}
+
 int CandidateList::insert(Candidate can)
 {
+    string tempName = can.name();
     if (isFull())
     {
         return -1;
     }
-    else if (int i = locate(can.name()) >= 0)
+    else if (int i = locate(&tempName, nullptr) >= 0)
     {
         return i;
     }
@@ -90,18 +127,32 @@ int CandidateList::isFull()
 {
     return last == MAX_CANDIDATES;
 }
+
 int CandidateList::isEmpty()
 {
     return last == -1;
 }
 
-int CandidateList::locate(string studentId)
+int CandidateList::locate(string *studentId, int *ballotID)
 {
-    for (int i = 0; i < last + 1; i++)
+    if (studentId != NULL)
     {
-        if (candidates[i].studentId().compare(studentId) == 0)
+        for (int i = 0; i < last + 1; i++)
         {
-            return i;
+            if (candidates[i].studentId().compare(*studentId) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < last + 1; i++)
+        {
+            if (*ballotID == candidates[i].ballotId())
+            {
+                return i;
+            }
         }
     }
     return -1;

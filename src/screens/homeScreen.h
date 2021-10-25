@@ -14,6 +14,8 @@ private:
     void _voteScreen();
     void _registrationScreen();
     int _generateVoterId();
+    void _votingSystem();
+    int validateVote(int ballotID,string pos);
 public:
     HomeScreen();
     
