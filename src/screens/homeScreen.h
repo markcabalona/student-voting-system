@@ -9,8 +9,10 @@ class HomeScreen
 {
 private:
     void _buildHomeScreen();//the main page where the user can vote, register, and see his/her profile
-    void _loginPage();//
-    void _signUpPage();//
+    bool _loginPage();//
+    bool _signUpPage();//
+    void _profile();
+    void _changePassword();
     void _voteScreen();//voting system validations happens here
     void _registrationScreen();// registration
     int _generateVoterId();// returns a 4 digit integer that will serve as voter id of the user

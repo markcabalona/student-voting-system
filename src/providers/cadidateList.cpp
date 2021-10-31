@@ -76,6 +76,7 @@ int CandidateList::save(){
     for (int i = 0; i<= last; i++){
         fprintf(fp,"%d,%s,%s,%s,%d\n",candidates[i].ballotId(),candidates[i].name().c_str(),candidates[i].position().c_str(),candidates[i].studentId().c_str(),candidates[i].voteCount());
     }
+    fclose(fp);
 
     return 1;
 }

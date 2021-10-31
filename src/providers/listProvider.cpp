@@ -2,8 +2,6 @@
 #include "listProvider.h"
 #include <future>
 #include <unistd.h>
-#include <fstream>
-#include <sstream>
 #include <string.h>
 #define FLASHDRIVE_PATH "e:/myInfo.csv"
 
@@ -63,20 +61,18 @@ void ListProvider::checkFlashDrive()
             return;
         }
     }
-    // fclose(fd);
-    // fd = fopen(FLASHDRIVE_PATH,"r");
     // pag nandito na ibigsabihin may nakainsert na na flashdrive
+
+    
     char buff[255];
     int row = 0;
     while (fgets(buff, 255, fd))
     {
         row++;
     }
-    fclose(fd);
 
     if (row == 0)
     {
-        fd = fopen(FLASHDRIVE_PATH, "w");
         fprintf(fd, "student_id,password,name,voter_id,isRegistered,voted\n");
         fclose(fd);
         Student temp = Student();
@@ -92,8 +88,6 @@ void ListProvider::checkFlashDrive()
     }
     // fclose(fd);
 
-    // fd = fopen(FLASHDRIVE_PATH, "r");
-    //  end of checking
     string id, pw, name;
     int voterId, isReg, voted;
     int col = 0;
@@ -144,6 +138,7 @@ void ListProvider::cancelFlashDriveChecking()
 {
     _checkFlashDriveToken = false;
     userReady.get();
+    return;
 }
 
 Student *ListProvider::user()
@@ -191,7 +186,7 @@ int ListProvider::retrieve()
         cout << "Student Database is empty." << endl;
         return -1;
     }
-    // TODO _candidateList.retrieve();
+    
 
     return 0;
 }
