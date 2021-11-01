@@ -1,28 +1,24 @@
-#include <iostream>
-//#include "models/candidate.h"
-//#include "providers/candidateList.h"
-//#include "providers/studentList.h"
-#include "providers/listProvider.h"
+/*
+    devs contributions:
+        Mark Cabalona - Lead, debugger
+        Eyvind Balasta - tester, debugger
 
+    BSCS 2A             STUDENT VOTING SYSTEM AND REGISTRATION
+*/
+
+
+#include <iostream>
+#include "providers/listProvider.h"
+#include "screens/homeScreen.h"
+#include <unistd.h>
 using namespace std;
 
+//these variables are declared as extern in providerList.h
+// that means that these vars can be accessed anywhere in the project (in cpp that includes providerList.h)
+ListProvider provider;
+// check for flashdrive asycnhronously
+future<void> userReady = async(&ListProvider::checkFlashDrive, &provider);
 int main(void)
 {
-    cout<<"Hello";
-    cout<<"Hello";
-    
-    ListProvider provider;
-    
-    cout<<"Hello";
-    cout<<provider.candidateList().last<<endl;
-    cout<<provider.studentList().last<<endl;
-
-   for (int i = 0; i <= provider.studentList().last; i++){
-       cout<<i+1<<provider.studentList().students[i].name()<<endl;
-   }
-
-    system("pause");
-
-    
-
+    HomeScreen();//this is the responsible of what will the user see in the terminal
 }

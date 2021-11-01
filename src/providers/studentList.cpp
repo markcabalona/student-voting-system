@@ -4,71 +4,97 @@
 
 using namespace std;
 
-//list operations defenition
+// list operations defenition
 
-int StudentList::insert(Student stud){
+int StudentList::insert(Student stud)
+{
+    string studName = stud.name();
+    if (isFull())
+    {
+        return -1;
+    }
+    else if (int i = locate(&studName, nullptr) >= 0)
+    {
+        return i;
+    }
     last++;
-    // TODO
     students[last] = stud;
     return 0;
 }
-
 
 void StudentList::makeNull()
 {
     last = -1;
 }
 
-int StudentList::locate(string studentId)
+int StudentList::locate(string *studentId, int *voterId)
 {
-    // TODO
-    return 0;
+    if (studentId != NULL)
+    {
+        for (int i = 0; i < last + 1; i++)
+        {
+            if ((*studentId).compare(students[i].studentId()) ==0 )
+            {
+                return i;
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < last + 1; i++)
+        {
+            if (*voterId == students[i].voterId())
+            {
+                return i;
+            }
+        }
+    }
+    return -1;
 }
 
-void StudentList::display()
-{
-    // TODO
-}
 int StudentList::isFull()
 {
-    // TODO
-    return 0;
+    return last == MAX_STUDENTS;
 }
 int StudentList::isEmpty()
-{ // di ata kailangan to
-    // TODO
-    return 0;
-}
-int StudentList::update(string studentId)
 {
-    // TODO
-    return 0;
+    return last == -1;
+}
+int StudentList::update(string studentId,Student stud)
+{
+    int index = locate(&studentId, nullptr);
+    if (index < 0)
+    {
+        return -1;
+    }
+    //student_id,password,name,voter_id,isRegistered,voted
+    students[index] = stud;//Student(stud.studentId(),stud.password(),stud.name(),stud.voterId(),stud.registered(),stud.voted());
+    return 1;
 }
 
-void StudentList::menu() {}
-
-int StudentList::retrieve(){
+int StudentList::retrieve()
+{
 
     FILE *fp = fopen(STUDENT_DB_FILEPATH, "r");
 
     if (!fp)
     {
-        cout<<"error";
-        return 0;
+        return -1;
     }
     else
-    { // if dbf reading is successfull populate the List
+    { // if csv reading is successfull populate the List
         Student tempRec;
         string id, pw, name;
         int voterId, isReg, voted;
-        char buff[129];
+        char buff[255];
         char *token;
         int col;
         int line = 0;
-        while (fgets(buff, 129, fp))
+        while (fgets(buff, 255, fp))
         {
-            if(line == 0){
-                //we don't want to read the header
+            if (line == 0)
+            {
+                // we don't want to read the header
                 line = 1;
                 continue;
             }
@@ -76,21 +102,24 @@ int StudentList::retrieve(){
             token = strtok(buff, ",\n");
             while (token != NULL)
             {
+                // parse the csv
+                // csv columns looks like this
+                // student_id,pasword,name,voter_id,isRegistered,voted
                 switch (col)
                 {
-                case 0:
+                case 0: // col 1
                     id = token;
                     break;
-                case 1:
+                case 1: // col 2
                     pw = token;
                     break;
-                case 2:
+                case 2: // col 3
                     name = token;
                     break;
-                case 3:
+                case 3: // col 4
                     voterId = atoi(token);
                     break;
-                case 4:
+                case 4: // col 5
                     isReg = atoi(token);
                     break;
                 case 5:
@@ -99,83 +128,31 @@ int StudentList::retrieve(){
                 default:
                     break;
                 }
-
                 col++;
                 token = strtok(NULL, ",\n");
-                
-                //printf("%d", col);
             }
-            
-            insert(Student(id, pw, name, voterId, isReg, voted));
-            cout<<line;
+            // return 0 if list is full
+            if (insert(Student(id, pw, name, voterId, isReg, voted)) < 0)
+            {
+                fclose(fp); // close the file
+                return 0;
+            }
         }
         fclose(fp); // close the file
         return 1;
     }
 }
 
+int StudentList::save(){
+    FILE *fp = fopen(STUDENT_DB_FILEPATH,"w");
 
+    char*tempStudId,*tempPassword,*tempName;
 
-/*
-#include <iostream>
-#include "candidateList.h"
-
-using namespace std;
-
-CandidateListProvider::CandidateListProvider(){
-    makeNull();
+    fprintf(fp,"student_id,password,name,voter_id,isRegistered,voted\n");
+    for (int i =0; i<= last; i++){
+        
+        fprintf(fp,"%s,%s,%s,%d,%d,%d\n",students[i].studentId().c_str(),students[i].password().c_str(),students[i].name().c_str(),students[i].voterId(),students[i].registered(),students[i].voted());
+    }
+    fclose(fp);
+    return 1;
 }
-CandidateList* CandidateListProvider::list(){
-    return _list;
-}
-int CandidateListProvider::insert(Candidate can){
-    _list->last++;
-    // TODO
-    _list->candidates[_list->last] = can;
-    return 0;
-}
-
-void CandidateListProvider::dispose()
-{
-    save();
-}
-void CandidateListProvider::makeNull()
-{
-    _list->last = -1;
-}
-void CandidateListProvider::retrieve()
-{
-    // TODO
-}
-void CandidateListProvider::save()
-{
-    // TODO
-}
-int CandidateListProvider::locate(string studentId)
-{
-    // TODO
-    return 0;
-}
-
-void CandidateListProvider::display()
-{
-    // TODO
-}
-int CandidateListProvider::isFull()
-{
-    // TODO
-    return 0;
-}
-int CandidateListProvider::isEmpty()
-{ // di ata kailangan to
-    // TODO
-    return 0;
-}
-int CandidateListProvider::update(string studentId)
-{
-    // TODO
-    return 0;
-}
-
-void CandidateListProvider::menu() {}
-*/

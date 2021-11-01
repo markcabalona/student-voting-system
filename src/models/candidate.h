@@ -7,15 +7,16 @@ class Candidate : public Student
 {
 private:
     string _position;
-    int _voteCount = 0;
+    int _voteCount;
+    int _ballotId;
 public:
     void incrementVoteCount();
 
     string position();
     int voteCount();
-    void setVoteCount(int vcount);
+    int ballotId();
 
-    Candidate(string position ,string name,string studentId,string pwd);
+    Candidate(int ballotId ,string name,string studentId,string position,int voteCount);
     Candidate();
 };
 

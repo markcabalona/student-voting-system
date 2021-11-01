@@ -11,15 +11,16 @@ typedef struct StudentList
 {
     Student students[MAX_STUDENTS];
     int last;
-    int locate(string studentId);
+    int locate(string *studentId,int* voterId);
     int insert(Student stud);
     void makeNull();
     void display();
     int isFull();
     int isEmpty();
-    int update(string studentId);
+    int update(string studentId,Student stud);
     void menu();
     int retrieve();
+    int save();
 
 } StudentList;
 
