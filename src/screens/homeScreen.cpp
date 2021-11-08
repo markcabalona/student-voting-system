@@ -56,7 +56,7 @@ void HomeScreen::_buildHomeScreen()
         case 4:
         {
             // stop the flashdrive checking that is running asynchronously
-            provider.cancelFlashDriveChecking();
+            // provider.cancelFlashDriveChecking();
             cout << "Thank you for using our system." << endl;
             running = false;
             break;
@@ -172,13 +172,13 @@ bool HomeScreen::_signUpPage()
 
 void HomeScreen::_profile()
 {
-    if (provider.user() == NULL) // wala pang nakainsert na fd
-    {
-        cout << "Please Insert a FlashDrive." << endl;
-        sleep(1);
-        return;
-    }
-    else if (provider.isGuestUser())
+    // if (provider.user() == NULL) // wala pang nakainsert na fd
+    // {
+    //     cout << "Please Insert a FlashDrive." << endl;
+    //     sleep(1);
+    //     return;
+    // }
+    if (provider.isGuestUser())
     {
         cout << "Please Register first." << endl;
     }
@@ -252,14 +252,14 @@ void HomeScreen::_changePassword()
 
 void HomeScreen::_voteScreen()
 {
-    if (provider.user() == NULL) // if no flashdrive inserted
-    {
-        cout << "Please Insert a FlashDrive." << endl;
-        sleep(1);
-    }
+    // if (provider.user() == NULL) // if no flashdrive inserted
+    // {
+    //     cout << "Please Insert a FlashDrive." << endl;
+    //     sleep(1);
+    // }
     // flashdrive is inserted
-    else
-    {
+    // else
+    // {
         // if flashdrive has no student info or if flashdrive has student info but not yet registered
         if (provider.isGuestUser() || !provider.user()->registered())
         {
@@ -280,7 +280,7 @@ void HomeScreen::_voteScreen()
             }
         }
         system("pause");
-    }
+    //}
 }
 
 void HomeScreen::_votingSystem()
@@ -358,19 +358,21 @@ void HomeScreen::_registrationScreen()
 {
     // provider._user is initialized to null
     // when a flashdrive is inseted provider._user will be pointing to a student (with or without initialized value)
-    if (provider.user() == NULL) // check if flashdrive is inserted
-    {
-        cout << "Please Insert a FlashDrive." << endl;
-        sleep(1);
-        return;
-    }
-    else
-    {
+    // if (provider.user() == NULL) // check if flashdrive is inserted
+    // {
+    //     cout << "Please Insert a FlashDrive." << endl;
+    //     sleep(1);
+    //     return;
+    // }
+    // else
+    // {
         // if flashdrive is inserted but has no student info in it
         if (provider.isGuestUser())
         {
             if(!_signUpPage()) // this will assign new values to the provider._user
+            {
                 return;
+            }
         }
         // if flashdrive is inserted and has a student inside
         else
@@ -397,7 +399,7 @@ void HomeScreen::_registrationScreen()
             system("pause");
             return;
         }
-    }
+    //}
 }
 
 int HomeScreen::_generateVoterId()

@@ -1,9 +1,9 @@
 #include <iostream>
 #include "listProvider.h"
-#include <future>
 #include <unistd.h>
 #include <string.h>
-#define FLASHDRIVE_PATH "e:/myInfo.csv"
+//#define FLASHDRIVE_PATH "e:/myInfo.csv"
+#define FLASHDRIVE_PATH "../db/testFlashDrive.csv"
 
 using namespace std;
 
@@ -55,11 +55,11 @@ void ListProvider::checkFlashDrive()
     while (!fd)
     {
         fd = fopen(FLASHDRIVE_PATH, "a+");
-        if (!_checkFlashDriveToken) // if cancel option was chosen
-        {
-            fclose(fd);
-            return;
-        }
+        // if (!_checkFlashDriveToken) // if cancel option was chosen
+        // {
+        //     fclose(fd);
+        //     return;
+        // }
     }
     // pag nandito na ibigsabihin may nakainsert na na flashdrive
 
@@ -91,7 +91,7 @@ void ListProvider::checkFlashDrive()
     string id, pw, name;
     int voterId, isReg, voted;
     int col = 0;
-    char *token = strtok(buff, ","); // buff = "TUPM-20-0621,BUENAVENTURA,BUENAVENTURA NICOLE,-1,0,0"
+    char *token = strtok(buff, ","); 
     while (token != NULL)
     {
         switch (col)
@@ -134,12 +134,12 @@ void ListProvider::_saveUser()
     fclose(fd);
 }
 
-void ListProvider::cancelFlashDriveChecking()
-{
-    _checkFlashDriveToken = false;
-    userReady.get();
-    return;
-}
+// void ListProvider::cancelFlashDriveChecking()
+// {
+//     _checkFlashDriveToken = false;
+    
+//     return;
+// }
 
 Student *ListProvider::user()
 {
@@ -168,12 +168,12 @@ int ListProvider::retrieve()
     // returns 1 if success
     // returns 0 if list is full
 
-    // call the cadidate and student list's retrieve functions asynchronously to speed up retrieving data
-    future<int> _sListResponse = async(&StudentList::retrieve, &_studentList);
-    // TODO implement _candidateList.retrieve()
-    future<int> _cListResponse = async(&CandidateList::retrieve, &_candidateList);
+    // // call the cadidate and student list's retrieve functions asynchronously to speed up retrieving data
+    // future<int> _sListResponse = async(&StudentList::retrieve, &_studentList);
+    // // TODO implement _candidateList.retrieve()
+    // future<int> _cListResponse = async(&CandidateList::retrieve, &_candidateList);
 
-    if (_sListResponse.get() < 0 || _cListResponse.get() < 0)
+    if (_studentList.retrieve() < 0 || _candidateList.retrieve() < 0)
     {
         system("cls");
         cout << "An error occured while reading the database." << endl;

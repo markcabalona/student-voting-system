@@ -4,7 +4,7 @@
 
 #include "candidateList.h"
 #include "studentList.h"
-#include <future>
+
 
 using namespace std;
 
@@ -12,7 +12,7 @@ class ListProvider
 {
 private:
     Student *_user = nullptr; // this will hold the content of user's flashdrive
-    bool _checkFlashDriveToken = true;
+    //bool _checkFlashDriveToken = true;
     CandidateList _candidateList;
     StudentList _studentList;
     bool _isGuestUser = true;
@@ -20,7 +20,7 @@ private:
 
 public:
     void checkFlashDrive();
-    void cancelFlashDriveChecking();
+    //void cancelFlashDriveChecking();
 
     Student *user();
     CandidateList* candidateList(); // getter, returns _candidateList
@@ -34,6 +34,5 @@ public:
 };
 
 extern ListProvider provider;
-extern future<void> userReady;
 
 #endif
