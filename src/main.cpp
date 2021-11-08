@@ -20,7 +20,6 @@ ListProvider provider;
 //future<void> userReady = async(&ListProvider::checkFlashDrive, &provider);
 int main(void)
 {
-    as
     cout<<"Insert FlashDrive"<<endl;
     cout<<"Press <Ctrl+C> to exit"<<endl;
     provider.checkFlashDrive();
