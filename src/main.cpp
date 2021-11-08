@@ -1,7 +1,7 @@
 /*
-    devs contributions:
-        Mark Cabalona - Lead, debugger
-        Eyvind Balasta - tester, debugger
+    
+    Mark Cabalona
+    Eyvind Balasta
 
     BSCS 2A             STUDENT VOTING SYSTEM AND REGISTRATION
 */
