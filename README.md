@@ -3,7 +3,7 @@
 - This program is written as a requirement for our Data Structures and Algorithms course at the Technological University of the Philippines.
 
 ## Overview
-- This is a simple console application that let users to vote for school's leader election
+- This is a simple console application that lets the users to vote for school's leader election.
 
 
 ## Instructions
